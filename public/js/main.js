@@ -10,6 +10,14 @@ function init(){
 
   $('#addTenant').on('click', addTenant);
   $('#addApartment').on('click', addApartment);
+
+  $('.showApartment').on('click', showDetails);
+}
+
+function showDetails(){
+  console.log('in show details');
+  console.log('this data is: ', $(this).data().apartmentid.replace(/\"/g,""));
+  location.href = '/apartments/showpage/' + $(this).data().apartmentid.replace(/\"/g,"");
 }
 
 function addTenant(){

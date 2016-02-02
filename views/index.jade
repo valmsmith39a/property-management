@@ -28,10 +28,10 @@ block content
           .col-xs-2= apartment.rentPerRoom
           .col-xs-2.thumb
             img(src=apartment.imageURL)
+          .col-xs-2.btn.btn-success.showApartment(data-apartmentId=apartment._id) Details
           if state==='move'
             .col-xs-2.btn.btn-primary.move(data-tenantId=tenantId,data-apartmentId=apartment._id, data-status=status) move 
-          if apartment.availableRooms === apartment.totalRooms 
-            .col-xs-2.btn.btn-success.showApartment(data-apartmentId=apartment._id) Details
+            
 
     else 
       .col-xs-2.btn.btn-primary#addTenant Add Tenant

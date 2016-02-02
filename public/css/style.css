@@ -1,4 +1,10 @@
+
 .thumb > img {
   max-height: 20px;
   max-width:20px;
 }
+
+.imageDetail {
+  max-height: 80%;
+  max-width:80%;
+} 

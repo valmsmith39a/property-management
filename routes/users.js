@@ -5,9 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 var authMiddleware = require('../config/auth');
-
 var User = require('../models/user');
-
 var ref = new Firebase('https://20160128.firebaseio.com/');
 
 router.post('/register', function(req, res, next) {
@@ -31,9 +29,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/profile', authMiddleware, function(req, res) {
   if (!req.user) { res.render('noauth'); return; };
-  //// logged in,   req.user
   User.findById(req.user._id, function(err, user) {
-    // res.send(user);
     res.render('profile', { useruid: user.uid, user_id: user._id, pokemon: user.pokemon})
   });
 });
@@ -41,6 +37,5 @@ router.get('/profile', authMiddleware, function(req, res) {
 router.get('/logout', function(req, res, next) {
   res.clearCookie('mytoken').redirect('/');
 });
-
 
 module.exports = router;

@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .jumbotron.text-center
+    h1 Ben and George's Property Management 
+    .container#list
+      .row
+        .col-xs-2 Total Rooms
+        .col-xs-2 Available Rooms
+        .col-xs-2 Rent per Room
+        .row.apartment
+        .col-xs-2= apartment.totalRooms
+        .col-xs-2= apartment.availableRooms
+        .col-xs-2= apartment.rentPerRoom
+        img.imageDetail(src=apartment.imageURL)
+    .container#tenantslist
+      .row
+        .col-xs-2 Tenants in Apt
+           each tenant in tenants 
+             .row.tenant
+               .col-xs-2.name= tenant.name
+        
+        
+
+      
+      
+        
+    
+      
+  
