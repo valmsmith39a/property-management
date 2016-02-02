@@ -10,7 +10,7 @@ block content
           .col-xs-2.name= tenant.name
           if tenant.hasHome 
            .col-xs-2 Has a home
-           .col-xs-2.btn.btn-danger.selectTenant(data-tenantId=tenant._id, data-status='hasHome') Move out
+           .col-xs-2.btn.btn-danger.move(data-tenantId=tenant._id, data-status='hasHome') Move out
           else 
             .col-xs-2 Needs a home
             .col-xs-2.btn.btn-primary.selectTenant(data-tenantId=tenant._id, data-status='homeless') Find Apt 

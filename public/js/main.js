@@ -43,6 +43,8 @@ function move(e){
   var tenantId = $(this).data().tenantid;
   //var status = $(this).data().status; 
 
+  debugger;
+
   var url = ("/tenants/" + tenantId + "/" + apartmentId); // (status === "hasHome") ? ("/tenants/" + tenantId + "/" + apartmentId) : ("/tenants/remove" + tenantId + "/" + apartmentId);
 
   $.ajax({
@@ -61,6 +63,8 @@ function move(e){
 
 function selectTenant(e){
   e.preventDefault();
+
+  debugger;
 
   var tenantId = $(this).data().tenantid.replace(/\"/g,""); 
   var status = $(this).data().status;
