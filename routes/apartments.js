@@ -10,6 +10,12 @@ router.get('/tenants/first/:limit', function(req, res, next) {
   }).limit(req.params.limit);
 });
 
+/*
+router.get('/showPage', function(req, res, next){
+  res.render({showPage:})
+}
+*/
+
 router.post('/', function(req, res, next) {
   console.log('inside post of tenants router file');
   console.log('req.body is: ', req.body);

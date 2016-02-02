@@ -49,6 +49,44 @@ router.get('/', function(req, res, next) {
   
 });
 
+// Clean 
+router.get('/move/:tenantId/:status', function(req, res, next) {
+  console.log('in router.get move/:tenantid', req.params.tenantId);
+
+  Apartment
+  .find({})
+  .exec(function(err, apartments){
+    // res.status(err ? 400 : 200).send(err || tenants);
+    if(err) return res.status(400).send(err); 
+    res.render('index', {apartments:apartments, state:'move',tenantId:req.params.tenantId, status:req.params.status});
+  });
+});
+
+// :apartment
+router.put('/remove/:tenant', function(req, res, next){
+  console.log('inside put request', req.params.tenant);
+  //console.log('req params tenant', req.params.apartment);
+  Tenant.findById(req.params.tenant, function(err, tenant){
+    if(err) res.status(400).send(err); 
+    if(!tenant.hasHome) {res.send('Tenant already HOMELESS.'); return;};
+    Apartment.findById(tenant.apartment.toString(), function(err, apartment){
+      if(err) res.status(400).send(err); 
+      console.log('found tenant!', tenant);
+      tenant.hasHome = false;
+      apartment.availableRooms++; 
+      delete tenant.apartment; 
+      tenant.save(function(err, savedTenant){
+        apartment.save(function(err, savedApartment){
+          res.status(err ? 400 : 200).send(err || savedTenant);
+          console.log('saved tenant with reference removed');
+        });
+      });
+    });
+    
+
+  });
+});
+
 router.put('/:tenant/:apartment', function(req, res, next){
   console.log('inside put request', req.params.tenant);
   console.log('req params tenant', req.params.apartment);
@@ -73,29 +111,7 @@ router.put('/:tenant/:apartment', function(req, res, next){
   });
 });
 
-router.put('/remove/:tenant/:apartment', function(req, res, next){
-  console.log('inside put request', req.params.tenant);
-  console.log('req params tenant', req.params.apartment);
-  Tenant.findById(req.params.tenant, function(err, tenant){
-    if(err) res.status(400).send(err); 
-    if(!tenant.hasHome) {res.send('Tenant already HOMELESS.'); return;};
-    console.log('found tenant!', tenant);
-    Apartment.findById(req.params.apartment, function(err, apartment){
-      if(err) res.status(400).send(err); 
-      //if(apartment.availableRooms === 0) {res.send('No rooms available'); return;};
-      console.log('found tenant!', tenant);
-      tenant.hasHome = false;
-      apartment.availableRooms++; 
-      delete tenant.apartment; 
-      tenant.save(function(err, savedTenant){
-        apartment.save(function(err, savedApartment){
-          res.status(err ? 400 : 200).send(err || savedTenant);
-          console.log('saved tenant with reference removed');
-        });
-      });
-    });
-  });
-});
+
 
 
 // router.put('/', function(req.))

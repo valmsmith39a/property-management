@@ -6,15 +6,37 @@ block content
   .container#list
     if state==='tenants'
       each tenant in tenants 
-        .row.tenant= tenant.name
-    if state==='apartments'
+        .row.tenant
+          .col-xs-2.name= tenant.name
+          if tenant.hasHome 
+           .col-xs-2 Has a home
+           .col-xs-2.btn.btn-danger.selectTenant(data-tenantId=tenant._id, data-status='hasHome') Move out
+          else 
+            .col-xs-2 Needs a home
+            .col-xs-2.btn.btn-primary.selectTenant(data-tenantId=tenant._id, data-status='homeless') Find Apt 
+    
+    else if (state==='apartments' || state === 'move')
+      .row
+        .col-xs-2 Total Rooms
+        .col-xs-2 Available Rooms
+        .col-xs-2 Rent per Room
+      hr 
       each apartment in apartments 
-        .row.apartment= apartment.totalRooms
-        .row.apartment= apartment.availableRooms
-        .row.apartment= apartment.rentPerRoom
-        img(src=apartment.imageURL)
+        .row.apartment
+          .col-xs-2= apartment.totalRooms
+          .col-xs-2= apartment.availableRooms
+          .col-xs-2= apartment.rentPerRoom
+          .col-xs-2.thumb
+            img(src=apartment.imageURL)
+          if state==='move'
+            .col-xs-2.btn.btn-primary.move(data-tenantId=tenantId,data-apartmentId=apartment._id, data-status=status) move 
+          if apartment.availableRooms === apartment.totalRooms 
+            .col-xs-2.btn.btn-success.showApartment(data-apartmentId=apartment._id) Details
 
+    else 
+      .col-xs-2.btn.btn-primary#addTenant Add Tenant
+      .col-xs-2.btn.btn-primary#addApartment Add Apartment 
 
 
 block scripts
-  script(src="/js/index.js")
+  script(src="/js/main.js")

@@ -1,37 +1,42 @@
 'use strict';
 
-var obj = {}; 
+$(document).ready(init);
 
-$(function() {
-  obj.email = $('#email');
-  obj.password = $('#password');
-  obj.password2 = $('#password2');
+function init(){
+  console.log('in init!');
+  $('#addTenant').on('click', addTenant);
+  $('#addApartment').on('click', addApartment);
+}
 
-  obj.state = $('#go').hasClass('register') ? 'register' : 'login';
-  
-  $('form').on('submit', go);
-});
-
-function go(e) {
+function addTenant(e){
   e.preventDefault();
+  location.href = 
 
-  var email = obj.email.val();
-  var password = obj.password.val();
-  var password2 = obj.password2.val();
-
-  if(obj.state === 'register' && password !== password2) {
-    $('.password').val('');
-    return alert('Passwords must match.');
-  }
-
-  obj.url = obj.state === "register" ? '/users/register' : '/users/login'; 
-
-  $.post(obj.url, {email: email, password: password})
+  $.post('/tenants', {name: $('#name').val()})
   .success(function() {
-    location.href = obj.state === "register" ? '/login' : '/';
+    location.href = '/tenants';
   })
   .fail(function(err) {
     alert('Error.  Check console.');
     console.log('err:', err);
   });
 }
+
+function addApartment(e){
+  e.preventDefault();
+
+   $.post('/apartments', {
+    totalRooms: $('#totalRooms').val(),
+    rentPerRoom: $('#rentPerRoom').val(),
+    imageURL: $('#imageURL').val()
+  })
+  .success(function() {
+    location.href = '/apartments';
+  })
+  .fail(function(err) {
+    alert('Error.  Check console.');
+    console.log('err:', err);
+  });
+
+}
+
