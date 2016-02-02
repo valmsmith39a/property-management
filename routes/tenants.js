@@ -50,17 +50,22 @@ router.get('/', function(req, res, next) {
 router.put('/:tenant/:apartment', function(req, res, next){
   console.log('inside put request', req.params.tenant);
   console.log('req params tenant', req.params.apartment);
-
   Tenant.findById(req.params.tenant, function(err, tenant){
     if(err) res.status(400).send(err); 
+    if(tenant.hasHome) {res.send('Tenant already has a home.'); return;};
     console.log('found tenant!', tenant);
     Apartment.findById(req.params.apartment, function(err, apartment){
       if(err) res.status(400).send(err); 
+      if(apartment.availableRooms === 0) {res.send('No rooms available'); return;};
       console.log('found tenant!', tenant);
+      tenant.hasHome = true;
+      apartment.availableRooms--; 
       tenant.apartment = apartment._id;
       tenant.save(function(err, savedTenant){
-        console.log('saved tenant with reference to Apartment');
-        res.status(err ? 400 : 200).send(err || savedTenant);
+        apartment.save(function(err, savedApartment){
+          res.status(err ? 400 : 200).send(err || savedTenant);
+          console.log('saved tenant with reference to Apartment');
+        });
       });
     });
   });

@@ -7,7 +7,8 @@ var Tenant;
 
 var tenantSchema = new mongoose.Schema({
   name:{type:String}, 
-  apartment: { type: mongoose.Schema.Types.ObjectId, ref: "Apartment" }
+  apartment: { type: mongoose.Schema.Types.ObjectId, ref: "Apartment" }, 
+  hasHome: {type:Boolean, default:false}
 });
   
 

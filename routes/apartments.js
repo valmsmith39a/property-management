@@ -13,6 +13,14 @@ router.get('/tenants/first/:limit', function(req, res, next) {
 router.post('/', function(req, res, next) {
   console.log('inside post of tenants router file');
   console.log('req.body is: ', req.body);
+  /*var object = {};
+
+  object.totalRooms = req.body.totalRooms;
+  object.rentPerRoom = req.body.rentPerRoom;
+  object.availableRooms = object.totalRooms;*/
+
+  req.body.availableRooms = req.body.totalRooms;
+
   Apartment.create(req.body, function(err, savedApartment) {
     console.log('saved tenant: ', savedApartment);
     res.status(err ? 400 : 200).send(err || savedApartment);

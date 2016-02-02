@@ -8,9 +8,10 @@ var moment = require('moment');
 var Apartment; 
 
 var apartmentSchema = new mongoose.Schema({
-  numberOfRooms:{type:Number},
+  totalRooms:{type:Number},
+  availableRooms:{type:Number},
   rentPerRoom: {type:Number},
-  imageURL:{type:String} 
+  imageURL:{type:String}
 })
 
 /*personSchema.pre('save', function(next) {
