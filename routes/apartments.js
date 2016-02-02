@@ -48,7 +48,8 @@ router.get('/', function(req, res, next) {
   Apartment
   .find(req.query).limit(limit).sort(sortObj)
   .exec(function(err, apartments){
-    res.status(err ? 400 : 200).send(err || apartments);
+    if(err) return res.status(400).send(err); 
+    res.render('index', {apartments:apartments, state:'apartments'});
   });
   
 });
